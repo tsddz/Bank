@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 #data_txt=np.loadtxt('../Data/YDN1_TARGET.txt')
 #data_txtDF=pd.DataFrame(data_txt)
 #print(data_txtDF.head())
-LISTname='FUND'
+LISTname='FNCG'
 train_target=pd.read_csv('E:/BANK/DATA_ALL/YDN1_TARGET.csv')
 train_A=pd.read_csv('E:\Bank\DATA_ALL\YDN1_'+LISTname+'.csv', nrows=140000)
 

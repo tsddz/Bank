@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import pandas as pd
+import FNCG_DEAL as FD
 import scipy
 
 train_dir='E:\Bank\DATA_ALL'
@@ -48,6 +49,9 @@ TRAIN_TARGET=pd.read_csv('E:\Bank\DATA_ALL\YDN1_TARGET.csv')
 # 只取时间上最后一个的数值BOND_PTPNAMT_LAST，如果有用到比如加权求和，可以再添加BOND_PTPNAMT_WEIGHTED
 
 #当然也可以对一些特征进行整合比如BOND_MATUDAT_jian_ARGCRTDAT其中用jia，jian，cheng，chu连接吧
+
+FD.make_FNCG()
+
 
 
 def make_bond():

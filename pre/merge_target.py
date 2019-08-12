@@ -1,17 +1,45 @@
 import pandas as pd
-LISTname='CC_CUST_STS'
+import sys
+sys.setrecursionlimit(1000000)
+LISTname='FNCG'
 train_A=pd.read_csv('E:\Bank\DATA_ALL/YDN1_TARGET.csv')
 train_B=pd.read_csv('E:\Bank\DATA_ALL\YDN1_'+LISTname+'.csv')
 
+deal = list(train_B.MATU_DAT)
+for i in range(len(deal)):
+    try:
+        deal[i] = float(deal[i])
+    except:
+        deal[i] = float('NaN')
+train_B.MATU_DAT = pd.Series(deal)
+
+deal = list(train_B.DATA_DT)
+for i in range(len(deal)):
+    try:
+        deal[i] = float(deal[i])
+    except:
+        deal[i] = float('NaN')
+train_B.DATA_DT = pd.Series(deal)
+
+deal = list(train_B.CLS_ACCT_DAT)
+for i in range(len(deal)):
+    try:
+        deal[i] = float(deal[i])
+    except:
+        deal[i] = float('NaN')
+train_B.CLS_ACCT_DAT = pd.Series(deal)
 
 
 newone=pd.merge(train_A,train_B,how='inner',left_on='CUST_NO',right_on='CUST_NO',suffixes=['_TARGET','_'+LISTname])
+newone.eval('cha31 = MATU_DAT - DATA_DT', inplace=True)
+newone.eval('cha32 = ARG_CRT_DAT - DATA_DT', inplace=True)
+newone.eval('cha33 = CLS_ACCT_DAT - DATA_DT', inplace=True)
 
 keylist=list(newone.keys())
 
 for i in range(len(keylist)):
-    if keylist[i] not in ['FLAG','CUST_NO','end_dat','DATA_DAT','PROD_CLS_CD','CCY_CD']:
-    #if keylist[i][0]=='c':
+    #if keylist[i] not in ['FLAG','CUST_NO','end_dat','DATA_DAT','PROD_CLS_CD','CCY_CD']:
+    if keylist[i][0]=='c':
         try:
             print('relationship between FLAG and ' + keylist[i] + ' : ')
             code = 'print(newone.FLAG.corr(pd.Series(list(newone.' + keylist[i] + '))))'
